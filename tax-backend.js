@@ -1,15 +1,36 @@
-// חישוב מס הכנסה לפי מדרגות 2025
-function calculateGrossTax(annualIncome) {
-  const brackets = [
-    { upTo: 84120, rate: 0.10 },
-    { upTo: 120720, rate: 0.14 },
-    { upTo: 193800, rate: 0.20 },
-    { upTo: 269280, rate: 0.31 },
-    { upTo: 560280, rate: 0.35 },
-    { upTo: 721560, rate: 0.47 },
-    { upTo: Infinity, rate: 0.50 }
-  ];
+// חישוב מס הכנסה לפי מדרגות עבור שנה מסוימת
+function calculateGrossTax(annualIncome, year) {
+  const bracketsByYear = {
+    2023: [
+      { upTo: 81480, rate: 0.10 },
+      { upTo: 116760, rate: 0.14 },
+      { upTo: 187440, rate: 0.20 },
+      { upTo: 260520, rate: 0.31 },
+      { upTo: 542160, rate: 0.35 },
+      { upTo: 698280, rate: 0.47 },
+      { upTo: Infinity, rate: 0.50 },
+    ],
+    2024: [
+      { upTo: 84120, rate: 0.10 },
+      { upTo: 120720, rate: 0.14 },
+      { upTo: 193800, rate: 0.20 },
+      { upTo: 269280, rate: 0.31 },
+      { upTo: 560280, rate: 0.35 },
+      { upTo: 721560, rate: 0.47 },
+      { upTo: Infinity, rate: 0.50 },
+    ],
+    2025: [
+      { upTo: 84120, rate: 0.10 },
+      { upTo: 120720, rate: 0.14 },
+      { upTo: 193800, rate: 0.20 },
+      { upTo: 269280, rate: 0.31 },
+      { upTo: 560280, rate: 0.35 },
+      { upTo: 721560, rate: 0.47 },
+      { upTo: Infinity, rate: 0.50 },
+    ],
+  };
 
+  const brackets = bracketsByYear[year];
   let remaining = annualIncome;
   let previousLimit = 0;
   let totalTax = 0;
@@ -28,8 +49,13 @@ function calculateGrossTax(annualIncome) {
   return totalTax;
 }
 
-function applyTaxCredits(grossTax, creditPoints) {
-  const creditValuePerYear = 242 * 12;
+function applyTaxCredits(grossTax, creditPoints, year) {
+  const creditValueByYear = {
+    2023: 2820,
+    2024: 2904,
+    2025: 2904,
+  };
+  const creditValuePerYear = creditValueByYear[year];
   const totalCredit = creditPoints * creditValuePerYear;
   return Math.max(0, grossTax - totalCredit);
 }
@@ -86,9 +112,10 @@ form.addEventListener("submit", function (e) {
   const creditPoints = parseFloat(document.getElementById("creditPoints").value);
   const lifeInsurance = parseFloat(document.getElementById("lifeInsurance").value);
   const pensionDeposit = parseFloat(document.getElementById("pensionDeposit").value);
+  const year = parseInt(document.getElementById("taxYear").value);
 
-  const grossTax = calculateGrossTax(income);
-  const taxAfterCredits = applyTaxCredits(grossTax, creditPoints);
+  const grossTax = calculateGrossTax(income, year);
+  const taxAfterCredits = applyTaxCredits(grossTax, creditPoints, year);
   const {
     finalTax,
     lifeInsuranceCredit,
