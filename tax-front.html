@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון החזר מס על תרומות</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #results {
+            margin-top: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        #results p {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        #results p strong {
+            color: #34495e;
+        }
+        #results p:last-child {
+            color: #e74c3c;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            input, button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>מחשבון החזר מס על תרומות</h1>
+        <form id="taxForm">
+            <div class="form-group">
+                <label for="income">הכנסה שנתית (₪)</label>
+                <input type="number" id="income" required placeholder="הזן הכנסה שנתית" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="creditPoints">מספר נקודות זיכוי</label>
+                <input type="number" id="creditPoints" step="0.25" required placeholder="הזן נקודות זיכוי">
+            </div>
+            <div class="form-group">
+                <label for="lifeInsurance">ביטוח חיים (₪)</label>
+                <input type="number" id="lifeInsurance" value="0" step="0.01" placeholder="הזן סכום ביטוח חיים">
+            </div>
+            <div class="form-group">
+                <label for="pensionDeposit">הפקדות לפנסיה/גמל (₪)</label>
+                <input type="number" id="pensionDeposit" value="0" step="0.01" placeholder="הזן הפקדות פנסיה">
+            </div>
+            <button type="submit">חשב החזר מס</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
+    <script src="tax-backend.js"></script>
+</body>
+</html>
