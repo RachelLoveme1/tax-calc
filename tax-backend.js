@@ -143,7 +143,7 @@ form.addEventListener("submit", function (e) {
     <p>🎯 <strong>מס לאחר נקודות זיכוי (${creditPoints}):</strong> ₪${formatter.format(taxAfterCredits)}</p>
     <p>📉 <strong>זיכוי ביטוח חיים:</strong> ₪${formatter.format(lifeInsuranceCredit)}</p>
     <p>📉 <strong>זיכוי גמל:</strong> ₪${formatter.format(pensionCredit)}</p>
-    <p>🧾 <strong>סה"כ מס סופי לתשלום:</strong> ₪${formatter.format(finalTax)}</p>
+    <p>🧾 <strong>סה\"כ מס סופי לתשלום:</strong> ₪${formatter.format(finalTax)}</p>
     <p>❤️ <strong>סכום תרומה לקבלת החזר מלא:</strong> ₪${formatter.format(requiredDonation)}</p>
     ${note ? `<p style=\"color:red;\">⚠️ ${note}</p>` : ""}
     <div style="margin-top: 20px; text-align: center;">
