@@ -153,4 +153,4 @@ form.addEventListener("submit", function (e) {
   `;
 
 const encodedText = encodeURIComponent(lastResultText);
-document.getElementById("whatsappShare").href = `https://wa.me/?text=${encodedText}`;
+document.getElementById("whatsappShare").href = `https://api.whatsapp.com/send?text=${encodedText}`;
