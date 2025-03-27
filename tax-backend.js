@@ -147,9 +147,9 @@ form.addEventListener("submit", function (e) {
     <p>🧾 <strong>סה\"כ מס סופי לתשלום:</strong> ₪${formatter.format(finalTax)}</p>
     <p>❤️ <strong>סכום תרומה לקבלת החזר מלא:</strong> ₪${formatter.format(requiredDonation)}</p>
     ${note ? `<p style=\"color:red;\">⚠️ ${note}</p>` : ""}
-    <div style="margin-top: 20px; text-align: center;">
-      <a id="whatsappShare" href="#" target="_blank" style="text-decoration: none; color: white; background-color: #25d366; padding: 10px 20px; border-radius: 8px; font-weight: bold; display: inline-block;">📤 שתף בוואטסאפ</a>
-    </div>
+    // <div style="margin-top: 20px; text-align: center;">
+    //   <a id="whatsappShare" href="#" target="_blank" style="text-decoration: none; color: white; background-color: #25d366; padding: 10px 20px; border-radius: 8px; font-weight: bold; display: inline-block;">📤 שתף בוואטסאפ</a>
+    // </div>
   `;
 
 const encodedText = encodeURIComponent(lastResultText);
