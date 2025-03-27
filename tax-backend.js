@@ -104,14 +104,15 @@ function calculateRequiredDonations(netTax, annualIncome) {
 // חיבור לטופס והצגת תוצאה
 const form = document.getElementById("taxForm");
 const resultsDiv = document.getElementById("results");
+let lastResultText = "";
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const income = parseFloat(document.getElementById("income").value);
+  const income = parseFormattedNumber(document.getElementById("income").value);
   const creditPoints = parseFloat(document.getElementById("creditPoints").value);
-  const lifeInsurance = parseFloat(document.getElementById("lifeInsurance").value);
-  const pensionDeposit = parseFloat(document.getElementById("pensionDeposit").value);
+  const lifeInsurance = parseFormattedNumber(document.getElementById("lifeInsurance").value);
+  const pensionDeposit = parseFormattedNumber(document.getElementById("pensionDeposit").value);
   const year = parseInt(document.getElementById("taxYear").value);
 
   const grossTax = calculateGrossTax(income, year);
@@ -124,13 +125,32 @@ form.addEventListener("submit", function (e) {
   } = applyAdditionalCredits(taxAfterCredits, lifeInsurance, pensionDeposit);
   const { requiredDonation, note } = calculateRequiredDonations(finalTax, income);
 
+  const formatter = new Intl.NumberFormat('he-IL', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+  lastResultText = `שנת מס: ${year}\n` +
+    `הכנסה שנתית: ₪${formatter.format(income)}\n` +
+    `נקודות זיכוי: ${creditPoints}\n` +
+    `מס ברוטו: ₪${formatter.format(grossTax)}\n` +
+    `מס לאחר זיכויים: ₪${formatter.format(finalTax)}\n` +
+    `סכום תרומה להחזר מלא: ₪${formatter.format(requiredDonation)}\n` +
+    (note ? `\nהערה: ${note}` : "");
+
   resultsDiv.innerHTML = `
-    <p>💰 <strong>מס ברוטו:</strong> ₪${grossTax.toFixed(2)}</p>
-    <p>🎯 <strong>מס לאחר נקודות זיכוי (${creditPoints}):</strong> ₪${taxAfterCredits.toFixed(2)}</p>
-    <p>📉 <strong>זיכוי ביטוח חיים:</strong> ₪${lifeInsuranceCredit.toFixed(2)}</p>
-    <p>📉 <strong>זיכוי גמל:</strong> ₪${pensionCredit.toFixed(2)}</p>
-    <p>🧾 <strong>סה"כ מס סופי לתשלום:</strong> ₪${finalTax.toFixed(2)}</p>
-    <p>❤️ <strong>סכום תרומה לקבלת החזר מלא:</strong> ₪${requiredDonation.toFixed(2)}</p>
-    ${note ? `<p style="color:red;">⚠️ ${note}</p>` : ""}
+    <p>💰 <strong>מס ברוטו:</strong> ₪${formatter.format(grossTax)}</p>
+    <p>🎯 <strong>מס לאחר נקודות זיכוי (${creditPoints}):</strong> ₪${formatter.format(taxAfterCredits)}</p>
+    <p>📉 <strong>זיכוי ביטוח חיים:</strong> ₪${formatter.format(lifeInsuranceCredit)}</p>
+    <p>📉 <strong>זיכוי גמל:</strong> ₪${formatter.format(pensionCredit)}</p>
+    <p>🧾 <strong>סה"כ מס סופי לתשלום:</strong> ₪${formatter.format(finalTax)}</p>
+    <p>❤️ <strong>סכום תרומה לקבלת החזר מלא:</strong> ₪${formatter.format(requiredDonation)}</p>
+    ${note ? `<p style=\"color:red;\">⚠️ ${note}</p>` : ""}
+    <div style="margin-top: 20px; text-align: center;">
+      <a id="whatsappShare" href="#" target="_blank" style="text-decoration: none; color: white; background-color: #25d366; padding: 10px 20px; border-radius: 8px; font-weight: bold; display: inline-block;">📤 שתף בוואטסאפ</a>
+    </div>
   `;
+
+  const encodedText = encodeURIComponent(lastResultText);
+  document.getElementById("whatsappShare").href = `https://wa.me/?text=${encodedText}`;
 });
