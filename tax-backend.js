@@ -139,6 +139,7 @@ form.addEventListener("submit", function (e) {
     (note ? `\nהערה: ${note}` : "");
 
   resultsDiv.innerHTML = `
+  
     <p>💰 <strong>מס ברוטו:</strong> ₪${formatter.format(grossTax)}</p>
     <p>🎯 <strong>מס לאחר נקודות זיכוי (${creditPoints}):</strong> ₪${formatter.format(taxAfterCredits)}</p>
     <p>📉 <strong>זיכוי ביטוח חיים:</strong> ₪${formatter.format(lifeInsuranceCredit)}</p>
@@ -151,6 +152,5 @@ form.addEventListener("submit", function (e) {
     </div>
   `;
 
-  const encodedText = encodeURIComponent(lastResultText);
-  document.getElementById("whatsappShare").href = `https://wa.me/?text=${encodedText}`;
-});
+const encodedText = encodeURIComponent(lastResultText);
+document.getElementById("whatsappShare").href = `https://wa.me/?text=${encodedText}`;
